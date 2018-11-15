@@ -1,4 +1,4 @@
-import { AudioPlayerOptions, AudioRecorderOptions, TNSPlayer, TNSRecorder } from 'nativescript-audio';
+import { AudioPlayerOptions, AudioRecorderOptions, TNSPlayer} from 'nativescript-audio';
 import * as app from 'tns-core-modules/application';
 import { Observable } from 'tns-core-modules/data/observable';
 import { File, knownFolders } from 'tns-core-modules/file-system';
@@ -8,6 +8,7 @@ import * as dialogs from 'tns-core-modules/ui/dialogs';
 import { Page } from 'tns-core-modules/ui/page';
 import { Slider } from 'tns-core-modules/ui/slider';
 import './async-await';
+import TNSRecorderAsync from "./TNSRecorderAsync";
 
 declare const android;
 
@@ -48,7 +49,7 @@ export class AudioDemo extends Observable {
     this._player = new TNSPlayer();
     this._player.debug = true; // set true for tns_player logs
 
-    this._recorder = new TNSRecorder();
+    this._recorder = new TNSRecorderAsync();
     this._recorder.debug = true; // set true for tns_recorder logs
 
     this.currentVolume = 1;
@@ -64,10 +65,10 @@ export class AudioDemo extends Observable {
 
   public async startRecord(args) {
     try {
-      if (!TNSRecorder.CAN_RECORD()) {
-        dialogs.alert('This device cannot record audio.');
-        return;
-      }
+      // if (!TNSRecorderAsync.CAN_RECORD()) {
+      //   dialogs.alert('This device cannot record audio.');
+      //   return;
+      // }
       const audioFolder = knownFolders.currentApp().getFolder('audio');
       console.log(JSON.stringify(audioFolder));
 

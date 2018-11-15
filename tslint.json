@@ -1,35 +1,123 @@
 {
+  "extends": ["tslint:recommended", "tslint-consistent-codestyle"],
   "rules": {
-    "class-name": true,
-    "comment-format": [true, "check-space"],
-    "indent": [true, "spaces"],
-    "no-duplicate-variable": true,
-    "no-eval": true,
-    "no-internal-module": true,
-    "no-trailing-whitespace": true,
-    "no-var-keyword": true,
-    "one-line": [true, "check-open-brace", "check-whitespace"],
-    "quotemark": [false, "double"],
-    "semicolon": [true, "always"],
-    "triple-equals": [true, "allow-null-check"],
-    "typedef-whitespace": [
+    "ban-types": false,
+    "curly": false,
+    "interface-over-type-literal": false,
+    "max-line-length": [false],
+    "no-angle-bracket-type-assertion": false,
+    "no-empty-interface": false,
+    "no-namespace": false,
+    "no-reference": false,
+    "no-return-undefined": true,
+    "no-static-this": true,
+    "no-string-literal": false,
+    "no-var-before-return": true,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "prefer-for-of": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+
+    // Prettier is in charge of the following rules, so exclude them from tslint to avoid highlighting mess
+    "arrow-parens": false,
+    "eofline": false,
+    "no-trailing-whitespace": false,
+    "one-line": false,
+    "quotemark": false,
+    "semicolon": false,
+    "typedef-whitespace": false,
+    "whitespace": false,
+    "trailing-comma": false,
+
+    "naming-convention": [
       true,
+      // forbid leading and trailing underscores and enforce camelCase on EVERY name.
+      // will be overridden by subtypes if needed
       {
-        "call-signature": "nospace",
-        "index-signature": "nospace",
-        "parameter": "nospace",
-        "property-declaration": "nospace",
-        "variable-declaration": "nospace"
+        "type": "default",
+        "format": "camelCase",
+        "leadingUnderscore": "forbid",
+        "trailingUnderscore": "forbid"
+      },
+      // require all global constants to be camelCase or UPPER_CASE
+      // all other variables and functions still need to be camelCase
+      {
+        "type": "variable",
+        "modifiers": ["global", "const"],
+        "format": ["camelCase", "UPPER_CASE"]
+      },
+      // override the above format option for exported constants to allow only UPPER_CASE
+      {
+        "type": "variable",
+        "modifiers": ["export", "const"],
+        "format": "UPPER_CASE"
+      },
+      // require exported constant variables that are initialized with functions to be camelCase
+      {
+        "type": "functionVariable",
+        "modifiers": ["export", "const"],
+        "format": "camelCase"
+      },
+      // allow leading underscores for private and protected properties and methods
+      {
+        "type": "member",
+        "modifiers": "private",
+        "leadingUnderscore": "allow"
+      },
+      {
+        "type": "member",
+        "modifiers": "protected",
+        "leadingUnderscore": "allow"
+      },
+      // allow all readonly members to be camelCase or UPPER_CASE
+      {
+        "type": "member",
+        "modifiers": ["readonly"],
+        "format": ["camelCase", "UPPER_CASE"]
+      },
+      // allow leading underscores for private and protected methods
+      {
+        "type": "method",
+        "modifiers": ["private"],
+        "leadingUnderscore": "allow"
+      },
+      {
+        "type": "method",
+        "modifiers": ["protected"],
+        "leadingUnderscore": "allow"
+      },
+      // enforce UPPER_CASE for all public static readonly(!) properties
+      {
+        "type": "property",
+        "modifiers": ["public", "static", "const"],
+        "format": ["camelCase", "UPPER_CASE"]
+      },
+      // allow PascalCase and UPPER_CASE for enums
+      {
+        "type": "enum",
+        "format": ["PascalCase", "UPPER_CASE"]
+      },
+      // enforce PascalCase for classes, interfaces
+      {
+        "type": "type",
+        "format": "PascalCase"
+      },
+      // abstract classes must have the prefix "Abstract". The following part of the name must be valid PascalCase
+      /*{
+        "type": "class",
+        "modifiers": "abstract",
+        "prefix": "Abstract"
+      },*/
+      // interface names must start with "I". The following part of the name must be valid PascalCase
+      {
+        "type": "interface",
+        "prefix": "I"
+      },
+      // generic type parameters must start with "T". The following part of the name must be valid PascalCase
+      {
+        "type": "genericTypeParameter",
+        "prefix": "T"
       }
-    ],
-    "variable-name": [true, "ban-keywords"],
-    "whitespace": [
-      true,
-      "check-branch",
-      "check-decl",
-      "check-operator",
-      "check-separator",
-      "check-type"
     ]
   }
 }

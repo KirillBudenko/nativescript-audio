@@ -19,7 +19,7 @@
       "noFallthroughCasesInSwitch": true,
       "baseUrl": ".",
       "paths": {
-        "*": ["./node_modules/*"]
+        "*": ["./node_modules/*", "./global.d.ts"]
       }
     },
     "exclude": ["node_modules", "platforms"],

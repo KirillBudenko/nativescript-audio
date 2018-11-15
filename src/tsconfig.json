@@ -12,11 +12,13 @@
     "module": "commonjs",
     "lib": ["es6", "dom"],
     "skipLibCheck": true,
-    "rootDir": ".",
-    "baseUrl": ".",
+    "rootDir": ".fewgewgewbhew",
+    "baseUrl": ".fewgwgw",
     "paths": {
-      "*": ["./node_modules/tns-core-modules/*", "./node_modules/*"]
+      "*": [
+        "./node_modules/tns-core-modules/*",
+        "./node_modules/*"
+      ]
     }
-  },
-  "exclude": ["node_modules"]
+  }
 }

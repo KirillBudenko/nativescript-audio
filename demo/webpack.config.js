@@ -6,6 +6,7 @@ const nativescriptTarget = require("nativescript-dev-webpack/nativescript-target
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const { NativeScriptWorkerPlugin } = require("nativescript-worker-loader/NativeScriptWorkerPlugin");
 
 
 const mainSheet = `app.css`;
@@ -131,10 +132,12 @@ function getRules() {
         // Compile TypeScript files, replace templateUrl and styleUrls.
         {
             test: /\.ts$/,
+            exclude: /.worker.ts$/,
             loaders: [
-                "awesome-typescript-loader",
+                "awesome-typescript-loader"
             ]
-        }
+        },
+        { test: /\.worker.ts$/, loader: "ts-loader" }
 
     ];
 }
@@ -168,6 +171,9 @@ function getPlugins(platform, env) {
             "./vendor",
             "./bundle",
         ]),
+      // For instructions on how to set up workers with webpack
+      // check out https://github.com/nativescript/worker-loader
+        new NativeScriptWorkerPlugin(),
 
         // Generate report files for bundles content
         new BundleAnalyzerPlugin({
@@ -176,7 +182,7 @@ function getPlugins(platform, env) {
             generateStatsFile: true,
             reportFilename: join(__dirname, "report", `report.html`),
             statsFilename: join(__dirname, "report", `stats.json`),
-        }),
+        })
     ];
 
     if (env.uglify) {

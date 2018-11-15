@@ -11,4 +11,4 @@ export * from './android/player';
 /**
  * Recorder
  */
-export * from './android/recorder';
+export * from './android/rawRecorder';
